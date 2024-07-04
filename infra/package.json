@@ -10,7 +10,9 @@
     "test": "jest",
     "cdk": "cdk",
     "cdk:deploy": "cdk deploy --profile nucleus --all",
-    "cdk:destroy": "cdk destroy --profile nucleus"
+    "cdk:destroy": "cdk destroy --profile nucleus",
+    "cdk:deploy:infra": "cdk deploy InfraStack --profile nucleus",
+    "cdk:deploy:waf": "cdk deploy WafCloudFrontStack --profile nucleus"
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",
@@ -24,6 +26,7 @@
   "dependencies": {
     "@aws-cdk/aws-s3-deployment": "^1.204.0",
     "aws-cdk-lib": "2.132.1",
+    "aws-sdk": "^2.1654.0",
     "constructs": "^10.0.0",
     "source-map-support": "^0.5.21"
   }
