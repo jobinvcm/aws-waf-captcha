@@ -29,19 +29,18 @@ const createStacks = async () => {
   
     /* For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html */
   });
-  const wafStack = new InfraStack(app, 'infra-stack-waf-poc-captcha-waf-resource', {
-    env: {
-      region: 'ap-southeast-2'
-    },
-    crossRegionReferences: true
-  })
+  // const wafStack = new InfraStack(app, 'infra-stack-waf-poc-captcha-waf-resource', {
+  //   env: {
+  //     region: 'ap-southeast-2'
+  //   },
+  //   crossRegionReferences: true
+  // })
   
   const baseStackS3Oai = baseStack.createS3andOrigin();
-  
-  const baseStackDistribution = baseStack.createCloudfrontDistribution(baseStackS3Oai.siteBucket, baseStackS3Oai.originAccessIdentity);
-  
-  const wafStackAclGlobal =  wafStack.createAWebAclGlobally(baseStackDistribution)
-  
+  const baseStackApi = baseStack.createLambda()
+  const baseStackDistribution = baseStack.createCloudfrontDistribution(baseStackS3Oai.siteBucket, baseStackS3Oai.originAccessIdentity, baseStackApi);
+  const wafStackAclGlobal =  baseStack.createAWebAclGlobally(baseStackDistribution)
+
   baseStack.createS3Deployment(wafStackAclGlobal.wafCaptchaResource, baseStackS3Oai.siteBucket)
 }
 

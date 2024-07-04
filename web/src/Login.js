@@ -14,13 +14,11 @@ export function Login () {
       setErrorMessage('Please enter a username and password')
       return
     } else setErrorMessage('')
-    captchaFetch('/api/login', {
-      method: 'POST',
+    captchaFetch('/api/api.json', {
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, password }),
       credentials: 'include'
     }).then(response => {
-      console.log('res')
+      console.log('res', response)
     })
   }
 
